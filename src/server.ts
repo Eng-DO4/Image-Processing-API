@@ -1,4 +1,5 @@
 import express, { Response, Request } from 'express';
+import resizing from './handler/resizing'
 
 const app = express();
 
@@ -11,5 +12,7 @@ app.get('/', (req: Request, res: Response): void => {
 app.listen(port, (): void => {
   console.log(`Enter Server: http://localhost:${port}`);
 });
+
+app.use(resizing);
 
 export default app;

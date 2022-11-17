@@ -27,3 +27,5 @@ resizing.get('/', async (req: Request, res: Response) => {
     return res.status(400).send('Enter valid values for dimensions no 0 or -ve');
   }
 });
+
+export default resizing;

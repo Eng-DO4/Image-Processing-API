@@ -1,12 +1,12 @@
 import sharp from 'sharp';
 
-function resizer(
+const resizer = async (
   imgsrc: string,
   width: number,
   height: number,
   thumbsrc: string
-): void {
-  sharp(imgsrc).resize(width, height).toFile(thumbsrc);
-}
+): Promise<void> => {
+  await sharp(imgsrc).resize(width, height).toFile(thumbsrc);
+};
 
 export default resizer;

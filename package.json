@@ -6,6 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "npm run build && node dist/server.js",
+    "check": "prettier --check .",
+    "format": "prettier --write .",
     "lint": "eslint .",
     "lint:f": "eslint . --fix",
     "test": "npm run build && jasmine"

@@ -1,5 +1,5 @@
 import express, { Response, Request } from 'express';
-import resizing from './handler/resizing'
+import resizing from './handler/resizing';
 
 const app = express();
 

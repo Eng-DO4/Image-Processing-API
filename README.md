@@ -5,6 +5,7 @@ The project is for Resizing an image using Sharp: The API fetch the image inputt
 
 ### Commands to run in terminal
 After downloading the project from GitHub run the commands in root directory
+
 0. `npm i` to install all dependencies
 1. `npm run build` to build js files from ts files
 2. `npm run start` to build then start the live server at main endpoint

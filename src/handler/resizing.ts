@@ -1,9 +1,11 @@
 import { Router, Request, Response } from 'express';
 import imgs from '../utils/_DATA';
+import path from 'path';
+import resizer from '../models/resizer';
 
 const resizing = Router();
 
-resizing.get('/', async (req: Request, res: Response) => {
+resizing.get('/resize', async (req: Request, res: Response) => {
   const name = req.query.name;
   const width = req.query.width;
   const height = req.query.height;
@@ -24,8 +26,14 @@ resizing.get('/', async (req: Request, res: Response) => {
   }
 
   if (imgWidth <= 0 || imgHeight <= 0) {
-    return res.status(400).send('Enter valid values for dimensions no 0 or -ve');
+    return res.status(400).send('Enter valid values for dimentions no 0 or -ve');
   }
+
+  let imgsrc = path.resolve(__dirname, `../../assets/full/${imgName}.jpg`);
+  let thumbName = `${imgName}-${imgWidth}-${imgHeight}`;
+  let thumbsrc = path.resolve(__dirname, `../../assets/thumb/${thumbName}.jpg`);
+  await resizer(imgsrc,imgWidth,imgHeight,thumbsrc);
+  return res.status(200).send(`Successfully resized in thumb folder`);
 });
 
 export default resizing;

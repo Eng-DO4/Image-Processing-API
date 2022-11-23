@@ -1,6 +1,5 @@
 import { Router, Request, Response } from 'express';
 import imgs from '../utils/_DATA';
-import path from 'path';
 import resizer from '../models/resizer';
 
 const resizing = Router();
@@ -34,11 +33,8 @@ resizing.get('/resize', async (req: Request, res: Response) => {
       .status(400)
       .send('Enter valid values for dimentions no 0 or -ve');
   }
-
-  let imgsrc = path.resolve(__dirname, `../../assets/full/${imgName}.jpg`);
-  let thumbName = `${imgName}-${imgWidth}-${imgHeight}`;
-  let thumbsrc = path.resolve(__dirname, `../../assets/thumb/${thumbName}.jpg`);
-  await resizer(imgsrc, imgWidth, imgHeight, thumbsrc);
+  
+  await resizer(imgName, imgWidth, imgHeight);
   return res.status(200).send(`Successfully resized in thumb folder`);
 });
 

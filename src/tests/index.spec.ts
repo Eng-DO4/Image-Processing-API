@@ -1,4 +1,5 @@
 import supertest from 'supertest';
+import resizer from '../models/resizer';
 import app from '../server';
 
 const request = supertest(app);
@@ -24,4 +25,11 @@ describe('Testing resizing endpoint', () => {
   it('Resized image successfully', async () => {
     await request.get('/resize?name=fjord&width=100&height=100').expect(200);
   });
-})
+});
+
+describe('Testing resizer model', () => {
+  it('Image resized successfully', async () => {
+    const response = resizer(`fjord`,300,100);
+    await expectAsync(response).toBeResolved();
+  });
+});

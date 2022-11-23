@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import imgs from '../utils/_DATA';
 import resizer from '../models/resizer';
+import path from 'path';
 
 const resizing = Router();
 
@@ -22,10 +23,10 @@ resizing.get('/resize', async (req: Request, res: Response) => {
       .send('We do not have images match the name you entered');
   }
 
-  const imgWidth = parseInt(width as string);
-  const imgHeight = parseInt(height as string);
+  const imgWidth = +(width as string);
+  const imgHeight = +(height as string);
   if (Number.isNaN(imgWidth) || Number.isNaN(imgHeight)) {
-    return res.status(400).send('Enter Numerical values for width and height');
+    return res.status(400).send('Only numerical values for width & height');
   }
 
   if (imgWidth <= 0 || imgHeight <= 0) {
@@ -33,9 +34,12 @@ resizing.get('/resize', async (req: Request, res: Response) => {
       .status(400)
       .send('Enter valid values for dimentions no 0 or -ve');
   }
-  
+
   await resizer(imgName, imgWidth, imgHeight);
-  return res.status(200).send(`Successfully resized in thumb folder`);
+  let thumbfolder = path.resolve(__dirname, `../../assets/thumb`);
+  let thumbName = `${imgName}-${imgWidth}-${imgHeight}`
+  let thumbsrc = path.resolve(thumbfolder, `${thumbName}.jpg`);
+  return res.status(200).sendFile(thumbsrc)
 });
 
 export default resizing;
